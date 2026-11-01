@@ -73,8 +73,8 @@ Custom Event / Trigger Custom Event dùng để gửi PlayerTakeDamage là kiế
 Mình thêm Script Machine thứ hai trên Player, dùng graph PlayerHealth.
 
 Các biến Object chính:
-- PlayerHealth = 15
-- maxHealth = 15
+- PlayerHealth = 20
+- maxHealth = 20
 - isDead = False
 - PlayerControls: tham chiếu Script Machine điều khiển hiện có.
 Graph nhận sự kiện:

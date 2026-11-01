@@ -4,7 +4,7 @@
 
 | Đối tượng | Máu khởi tạo | Sát thương mỗi đòn trúng |
 |---|---:|---:|
-| Player | 15 | Mỗi Arrow trúng gây 1 sát thương |
+| Player | 20 | Mỗi Arrow trúng gây 1 sát thương |
 | Golem Blue — quái đặc biệt | 9 | 1 |
 | Golem Yellow — quái thường | 5 | 1 |
 
@@ -40,7 +40,7 @@ Mỗi con giữ máu riêng; không chia sẻ biến App/Scene để lưu máu q
 11. Hết máu: Trigger doDie → velocity=(0,0) → gravityScale=0 → BoxCollider2D disabled → Destroy This sau 0.6 giây → ScriptMachine disabled.
 
 Animation Die màu vàng dài khoảng 0.517 giây, nên thời gian hủy 0.6 giây cho clip phát xong.
-Arrow giữ cách bắn sang phải như trước.
+Arrow hiện lấy hướng từ Player: direction = 1 để bay phải, direction = -1 để bay trái; điểm sinh và Flip X theo hướng nhìn.
 
 ## Animator
 
