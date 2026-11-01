@@ -1,0 +1,32 @@
+{
+  "playerLayer": 8,
+  "enemyLayer": 9,
+  "ignorePairs": [
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      9,
+      9
+    ]
+  ],
+  "groundPairsStillEnabled": [
+    [
+      8,
+      6
+    ],
+    [
+      9,
+      6
+    ]
+  ],
+  "arrowEnemyPairStillEnabled": [
+    0,
+    9
+  ]
+}

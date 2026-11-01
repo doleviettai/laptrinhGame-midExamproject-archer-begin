@@ -1,0 +1,108 @@
+[
+  {
+    "scene": "SampleScene",
+    "decorSpriteCount": 45,
+    "decorColliderCount": 0,
+    "changedRendererCount": 9,
+    "before": {
+      "sortingLayer": "Foreground",
+      "order": 2
+    },
+    "after": {
+      "sortingLayer": "Default",
+      "order": -5
+    },
+    "objects": [
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_00",
+        "renderer": 5940029340401280188
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_09",
+        "renderer": 2215116475864421938
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_02",
+        "renderer": 7292834011283388237
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_01",
+        "renderer": 7804256285727699755
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_05",
+        "renderer": 422060463139089281
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_03",
+        "renderer": 8834805693779575450
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_07",
+        "renderer": 6981530543428116983
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_08",
+        "renderer": 7821440160886379930
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_06",
+        "renderer": 465549001428413032
+      }
+    ],
+    "onlySpriteRendererSortingChanged": true
+  },
+  {
+    "scene": "Level2",
+    "decorSpriteCount": 45,
+    "decorColliderCount": 0,
+    "changedRendererCount": 9,
+    "before": {
+      "sortingLayer": "Foreground",
+      "order": 2
+    },
+    "after": {
+      "sortingLayer": "Default",
+      "order": -5
+    },
+    "objects": [
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_00",
+        "renderer": 5940029340401280188
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_09",
+        "renderer": 2215116475864421938
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_02",
+        "renderer": 7292834011283388237
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_01",
+        "renderer": 7804256285727699755
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_05",
+        "renderer": 422060463139089281
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_03",
+        "renderer": 8834805693779575450
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_07",
+        "renderer": 6981530543428116983
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_08",
+        "renderer": 7821440160886379930
+      },
+      {
+        "hierarchy": "Backdrop/EnvironmentDecor/ForegroundTrees/FrontTree_06",
+        "renderer": 465549001428413032
+      }
+    ],
+    "onlySpriteRendererSortingChanged": true
+  }
+]
