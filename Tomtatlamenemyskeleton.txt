@@ -1,0 +1,114 @@
+Quá trình làm phần Skeleton vừa rồi như sau:
+
+1. Kiểm tra những gì đã có
+
+Player đã có di chuyển, lật ảnh, Walk, Attack bằng J, nhảy bằng Space và bắn Arrow.
+
+Skeleton chỉ có Sprite Renderer và Animator. Vì vậy nó phát Idle được, nhưng chưa có phần di chuyển, đánh hoặc nhận sát thương.
+
+2. Thêm cấu hình cho Skeleton
+
+Mình thêm vào GameObject Enemy → Skeleton:
+| Component | Thiết lập chính |
+|---|---|
+| Rigidbody 2D | Dynamic, Gravity Scale `3`, Freeze Rotation Z |
+| Box Collider 2D | Is Trigger tắt, bao quanh thân |
+| Variables | Lưu máu, tốc độ, trạng thái và tham chiếu Player |
+| Script Machine | Dùng graph `SkeletonCombat` |
+
+
+Các biến đều thuộc loại Object, nên mỗi Skeleton có dữ liệu riêng:
+| Biến | Giá trị/ý nghĩa |
+|---|---|
+| `health` | `3` máu |
+| `moveSpeed` | Tốc độ chạy `2.4` |
+| `attackRange` | Tầm đánh ngang `1.6` |
+| `attackVerticalRange` | Chênh lệch độ cao tối đa `1.75` |
+| `attackDelay` | Chờ `0.25` giây trước khi gây sát thương |
+| `attackRecovery` | Nghỉ `0.6` giây sau đòn đánh |
+| `isAwake` | Đã phát hiện Player |
+| `isHurt` | Đang bị đánh |
+| `isAttacking` | Đang thực hiện đòn đánh |
+| `Player`, `MainCamera` | Tham chiếu nhân vật và camera Game |
+
+
+3. Phát hiện Skeleton xuất hiện trong camera
+
+Đây là kiến thức bổ sung: mình dùng Camera: World To Viewport Point để kiểm tra vị trí Skeleton trong camera Game.
+
+Graph đọc điều kiện bằng On Update:
+Skeleton nằm trong khung camera
+→ Set Object Variable isAwake = True
+→ Bắt đầu đuổi Player
+isAwake giữ giá trị True sau khi phát hiện, nên Skeleton tiếp tục đuổi.
+
+4. Cho Skeleton chạy về phía Player
+
+Mình lấy tâm collider của Player và Skeleton, rồi dùng Subtract tính khoảng cách.
+Player ở bên trái → Flip X = True
+Player ở bên phải → Flip X = False
+Vận tốc ngang được tính bằng hướng đến Player × moveSpeed, rồi đưa vào Rigidbody 2D: Set Linear Velocity X.
+
+Animator nhận isWalk = True khi chạy. Khi đang Hurt, đang đánh hoặc Player hết máu, Skeleton dừng vận tốc ngang.
+
+Các phép Abs, Sign và đọc tâm collider là kiến thức bổ sung.
+
+5. Cho Skeleton đánh Player
+
+Khi khoảng cách đủ gần, Flow chạy:
+Dừng chạy
+→ isAttacking = True
+→ Animator Set Trigger: doAttack
+→ Timer 0.25 giây
+→ Kiểm tra Player còn trong tầm đánh
+→ Gửi sự kiện PlayerTakeDamage
+→ Timer nghỉ 0.6 giây
+→ isAttacking = False
+Mình kiểm tra lại khoảng cách tại thời điểm gây sát thương. Vì vậy, nếu Player chạy hoặc nhảy ra khỏi tầm trước lúc đó, đòn đánh sẽ hụt.
+
+Custom Event / Trigger Custom Event dùng để gửi PlayerTakeDamage là kiến thức bổ sung.
+
+6. Xử lý Player mất máu và bị đánh
+
+Mình thêm Script Machine thứ hai trên Player, dùng graph PlayerHealth.
+
+Các biến Object chính:
+- PlayerHealth = 15
+- maxHealth = 15
+- isDead = False
+- PlayerControls: tham chiếu Script Machine điều khiển hiện có.
+Graph nhận sự kiện:
+Custom Event: PlayerTakeDamage
+→ If PlayerHealth > 0
+→ Subtract 1
+→ Set Object Variable PlayerHealth
+Nếu vẫn còn máu, graph gọi Animator Set Trigger isEatHit, chuyển sang clip eat_hit.
+
+Nếu máu về 0, graph phát Death, dừng vận tốc, tắt collider, đặt trọng lực bằng 0 và tắt Script Machine điều khiển.
+
+7. Xử lý Arrow trúng Skeleton
+
+Sự kiện này được bắt trên Skeleton:
+On Trigger Enter 2D
+→ Lấy GameObject của collider vừa chạm
+→ Compare Tag: PlayerArrow
+→ If đúng và Skeleton còn sống
+→ Destroy mũi tên
+→ health = health − 1
+Sau đó chia hai nhánh:
+- Còn máu: dừng chạy, phát skeleton_eat_hit, chờ khoảng 0.36 giây rồi tiếp tục hành vi.
+- Hết máu: phát skeleton_dead, tắt collider và hủy Skeleton sau 0.95 giây.
+8. Nối Animator
+
+Mình thêm các parameter và transition:
+Idle ↔ skeleton_walking      dùng Boolean isWalk
+Any State → skeleton_attack1 dùng Trigger doAttack
+Any State → skeleton_eat_hit dùng Trigger gotHit
+Any State → skeleton_dead    dùng Trigger doDie
+Attack và Hurt trở về Idle bằng Has Exit Time. Các clip Attack, Hurt và Die được tắt Loop Time.
+
+9. Sửa lỗi và chạy thử
+
+Lúc kiểm tra, va chạm Arrow đã xảy ra nhưng Compare Tag trả về False. Nguyên nhân là thứ tự tag thay đổi khi thêm Enemy. Mình đã giữ lại thứ tự tag cũ và import lại prefab.
+
+Sau đó mình chạy Play, xác nhận Skeleton đuổi, đánh Player, nhận sát thương từ Arrow và chết sau ba phát. Các lượt kiểm tra cuối không có lỗi graph.

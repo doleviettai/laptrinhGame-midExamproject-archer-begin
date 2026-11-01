@@ -1,0 +1,44 @@
+{
+  "graphs": [
+    {
+      "graph": "GolemBlueCombat",
+      "healthPreserved": 9,
+      "removedOnBecameVisible": true,
+      "resetOnStart": true,
+      "mainCameraReference": "MainCamera",
+      "cameraMethodMatchesSkeleton": true,
+      "awakeGateToCameraIf": true,
+      "newNodes": 20,
+      "newWires": 29,
+      "viewportNodeID": "215",
+      "visibleIfID": "228"
+    },
+    {
+      "graph": "GolemYellowCombat",
+      "healthPreserved": 5,
+      "removedOnBecameVisible": true,
+      "resetOnStart": true,
+      "mainCameraReference": "MainCamera",
+      "cameraMethodMatchesSkeleton": true,
+      "awakeGateToCameraIf": true,
+      "newNodes": 20,
+      "newWires": 29,
+      "viewportNodeID": "216",
+      "visibleIfID": "229"
+    }
+  ],
+  "sceneReferences": [
+    {
+      "object": "Golem_blue",
+      "variablesID": "738191899",
+      "health": 9,
+      "cameraReferenceIndex": 1
+    },
+    {
+      "object": "Golem_yellow",
+      "variablesID": "3171497350686431758",
+      "health": 5,
+      "cameraReferenceIndex": 1
+    }
+  ]
+}

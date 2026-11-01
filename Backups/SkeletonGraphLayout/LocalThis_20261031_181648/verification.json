@@ -1,0 +1,50 @@
+{
+    "beforeNodes":  141,
+    "afterNodes":  147,
+    "wires":  181,
+    "beforeThis":  1,
+    "afterThis":  7,
+    "frames":  14,
+    "rewiredThisConnections":  19,
+    "crossFrameThisConnections":  0,
+    "sameSelfTargetVerified":  true,
+    "allOtherBehaviorPreserved":  true,
+    "referenceOrderValid":  true,
+    "sections":  [
+                     {
+                         "label":  "03 | TỌA ĐỘ NHÂN VẬT",
+                         "thisNodeId":  "9",
+                         "thisNodeGuid":  "c6d0fe41-ee56-4c8e-863a-1b0eab9d007b"
+                     },
+                     {
+                         "label":  "05 | CAMERA PHÁT HIỆN",
+                         "thisNodeId":  "351",
+                         "thisNodeGuid":  "56ba3450-7b12-4d03-bace-6e30bfc53c6b"
+                     },
+                     {
+                         "label":  "07 | DỪNG TẠM THỜI",
+                         "thisNodeId":  "352",
+                         "thisNodeGuid":  "a9f6e5b9-64e2-4a14-9c7b-67e4e7f39c67"
+                     },
+                     {
+                         "label":  "08 | ĐUỔI PLAYER",
+                         "thisNodeId":  "353",
+                         "thisNodeGuid":  "dc1ab5a2-9a47-4f7b-ae00-9b12f92a1fe1"
+                     },
+                     {
+                         "label":  "09 | BẮT ĐẦU ĐÒN ĐÁNH",
+                         "thisNodeId":  "354",
+                         "thisNodeGuid":  "6ae31d65-c482-4257-b6d3-af0fbb2cb033"
+                     },
+                     {
+                         "label":  "13 | HURT VÀ HỒI PHỤC",
+                         "thisNodeId":  "355",
+                         "thisNodeGuid":  "f3bde1d3-b900-422b-8a7b-ac014e913678"
+                     },
+                     {
+                         "label":  "14 | CHẾT VÀ HỦY SKELETON",
+                         "thisNodeId":  "356",
+                         "thisNodeGuid":  "b875146f-68c2-4cd3-8191-d00ef0529d53"
+                     }
+                 ]
+}

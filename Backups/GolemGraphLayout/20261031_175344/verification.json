@@ -1,0 +1,529 @@
+{
+    "nodeCount":  79,
+    "connectionCount":  83,
+    "groupCount":  12,
+    "behaviorPreserved":  true,
+    "serializedOrderPreserved":  true,
+    "referenceOrderValid":  true,
+    "groupFramesDoNotOverlap":  true,
+    "allNodesAssignedExactlyOnce":  true,
+    "sections":  [
+                     {
+                         "label":  "01 | KHỞI TẠO",
+                         "description":  "On Start đặt health = 7, isAttacking = False, isHurt = False. Các biến đều thuộc Object trên Golem Blue.",
+                         "position":  {
+                                          "xMin":  0,
+                                          "yMin":  0,
+                                          "xMax":  1500,
+                                          "yMax":  650
+                                      }
+                     },
+                     {
+                         "label":  "02 | PHÁT HIỆN PLAYER",
+                         "description":  "On Became Visible → đặt Object isAwake = True. Sự kiện cũng có thể được kích hoạt bởi camera Scene view trong Editor.",
+                         "position":  {
+                                          "xMin":  1700,
+                                          "yMin":  0,
+                                          "xMax":  2800,
+                                          "yMax":  650
+                                      }
+                     },
+                     {
+                         "label":  "03 | HƯỚNG VÀ KHOẢNG CÁCH",
+                         "description":  "Data dùng chung: deltaX = Player.position.x − This.position.x. deltaX \u003e 0: Player bên phải. Abs(deltaX) ≤ attackRange: trong tầm ngang. Kết quả cấp cho nhóm 04, 05 và 07.",
+                         "position":  {
+                                          "xMin":  3000,
+                                          "yMin":  0,
+                                          "xMax":  6300,
+                                          "yMax":  850
+                                      }
+                     },
+                     {
+                         "label":  "04 | CHỌN HÀNH VI",
+                         "description":  "On Update → If isAwake → If isHurt. Hurt=True: nhóm 08. Hurt=False: kiểm tra tầm đánh; ngoài tầm → nhóm 05, trong tầm → nhóm 06.",
+                         "position":  {
+                                          "xMin":  0,
+                                          "yMin":  1100,
+                                          "xMax":  1500,
+                                          "yMax":  1900
+                                      }
+                     },
+                     {
+                         "label":  "05 | ĐUỔI VÀ QUAY MẶT",
+                         "description":  "If deltaX \u003e 0: vận tốc X = moveSpeed, Flip X=False, isWalk=True. Nhánh còn lại: vận tốc X = moveSpeed × −1, Flip X=True, isWalk=True. Giữ nguyên vận tốc Y.",
+                         "position":  {
+                                          "xMin":  1700,
+                                          "yMin":  1100,
+                                          "xMax":  3700,
+                                          "yMax":  1980
+                                      }
+                     },
+                     {
+                         "label":  "06 | BẮT ĐẦU ĐÒN ĐÁNH",
+                         "description":  "Trong tầm: dừng X, isWalk=False. If isAttacking=False → đặt True → Animator doAttack → Timer attackDelay. If isAttacking=True: không khởi động lại đòn.",
+                         "position":  {
+                                          "xMin":  3900,
+                                          "yMin":  1100,
+                                          "xMax":  6300,
+                                          "yMax":  1980
+                                      }
+                     },
+                     {
+                         "label":  "07 | GÂY SÁT THƯƠNG VÀ NGHỈ",
+                         "description":  "Timer ra đòn Completed → kiểm tra lại tầm ngang. True: gửi PlayerTakeDamage đến Player. False: đánh hụt. Cả hai đi vào Timer attackRecovery → isAttacking=False để được đánh tiếp.",
+                         "position":  {
+                                          "xMin":  3900,
+                                          "yMin":  2180,
+                                          "xMax":  6300,
+                                          "yMax":  3000
+                                      }
+                     },
+                     {
+                         "label":  "08 | DỪNG TRONG LÚC HURT",
+                         "description":  "Nhánh isHurt=True từ nhóm 04: vận tốc X=0, Animator isWalk=False. Chờ nhóm 11 đặt lại isHurt=False để tiếp tục hành vi.",
+                         "position":  {
+                                          "xMin":  0,
+                                          "yMin":  2180,
+                                          "xMax":  1500,
+                                          "yMax":  2780
+                                      }
+                     },
+                     {
+                         "label":  "09 | NHẬN ARROW VÀ LỌC TAG",
+                         "description":  "On Trigger Enter 2D → lấy GameObject từ Collider → Compare Tag PlayerArrow → If đúng tag → If health \u003e 0. Chỉ nhánh True chuyển sang nhóm 10.",
+                         "position":  {
+                                          "xMin":  0,
+                                          "yMin":  3200,
+                                          "xMax":  1800,
+                                          "yMax":  4100
+                                      }
+                     },
+                     {
+                         "label":  "10 | TRỪ MÁU VÀ RẼ NHÁNH",
+                         "description":  "Hủy GameObject Arrow (T=0) → health = health − Integer 1 → kiểm tra Value vừa lưu \u003e 0. True → nhóm 11 Hurt. False → nhóm 12 chết.",
+                         "position":  {
+                                          "xMin":  2000,
+                                          "yMin":  3200,
+                                          "xMax":  3600,
+                                          "yMax":  4100
+                                      }
+                     },
+                     {
+                         "label":  "11 | HURT VÀ HỒI PHỤC",
+                         "description":  "Còn máu: Object isHurt=True → Animator Trigger gotHit → Timer 0.36 giây → isHurt=False. Nhóm 08 dừng chạy trong thời gian này.",
+                         "position":  {
+                                          "xMin":  3800,
+                                          "yMin":  3200,
+                                          "xMax":  6300,
+                                          "yMax":  4100
+                                      }
+                     },
+                     {
+                         "label":  "12 | CHẾT VÀ HỦY GOLEM",
+                         "description":  "Hết máu: doDie → vận tốc (0,0) → Gravity=0 → tắt BoxCollider2D → Destroy This sau 0.85 giây → tắt ScriptMachine. Animator vẫn phát animation chết trong thời gian chờ.",
+                         "position":  {
+                                          "xMin":  2000,
+                                          "yMin":  4300,
+                                          "xMax":  6300,
+                                          "yMax":  5100
+                                      }
+                     }
+                 ],
+    "nodeMembership":  [
+                           {
+                               "nodeGuid":  "af99c823-251d-451d-a781-b4a737dd84e1",
+                               "nodeId":  "9",
+                               "section":  "01 | KHỞI TẠO"
+                           },
+                           {
+                               "nodeGuid":  "3ce78227-61de-49c9-8a07-339f051df0cf",
+                               "nodeId":  "80",
+                               "section":  "01 | KHỞI TẠO"
+                           },
+                           {
+                               "nodeGuid":  "ad81c42d-ef62-4a22-a2ab-9405e10d1c6e",
+                               "nodeId":  "82",
+                               "section":  "01 | KHỞI TẠO"
+                           },
+                           {
+                               "nodeGuid":  "acd9eb87-4a3d-4419-b586-0792b9cde6b8",
+                               "nodeId":  "23",
+                               "section":  "01 | KHỞI TẠO"
+                           },
+                           {
+                               "nodeGuid":  "1ddd31a3-5594-427e-8b81-51d23b66c50e",
+                               "nodeId":  "25",
+                               "section":  "01 | KHỞI TẠO"
+                           },
+                           {
+                               "nodeGuid":  "5573a4be-6b8f-406c-a46b-28c9a6cb200a",
+                               "nodeId":  "64",
+                               "section":  "01 | KHỞI TẠO"
+                           },
+                           {
+                               "nodeGuid":  "d7982d0f-8e73-42da-8027-75b21cd9b029",
+                               "nodeId":  "66",
+                               "section":  "01 | KHỞI TẠO"
+                           },
+                           {
+                               "nodeGuid":  "3edf6ff5-07b2-4e56-a811-88bfc992c83d",
+                               "nodeId":  "84",
+                               "section":  "02 | PHÁT HIỆN PLAYER"
+                           },
+                           {
+                               "nodeGuid":  "8d6c03b6-450a-495a-9e47-4c5c9ec5b5c1",
+                               "nodeId":  "86",
+                               "section":  "02 | PHÁT HIỆN PLAYER"
+                           },
+                           {
+                               "nodeGuid":  "da041150-96fb-4680-b4e2-c64f914d49c3",
+                               "nodeId":  "88",
+                               "section":  "02 | PHÁT HIỆN PLAYER"
+                           },
+                           {
+                               "nodeGuid":  "96075d48-88ac-44bd-b3c1-c71f2bfbb774",
+                               "nodeId":  "102",
+                               "section":  "03 | HƯỚNG VÀ KHOẢNG CÁCH"
+                           },
+                           {
+                               "nodeGuid":  "a0e77cb9-5ade-4612-b5df-5c8955dcb924",
+                               "nodeId":  "53",
+                               "section":  "03 | HƯỚNG VÀ KHOẢNG CÁCH"
+                           },
+                           {
+                               "nodeGuid":  "33abb33d-5f69-4793-be62-6f91239e3137",
+                               "nodeId":  "94",
+                               "section":  "03 | HƯỚNG VÀ KHOẢNG CÁCH"
+                           },
+                           {
+                               "nodeGuid":  "e9deb1d7-b283-426e-81c6-63e25f111f4b",
+                               "nodeId":  "97",
+                               "section":  "03 | HƯỚNG VÀ KHOẢNG CÁCH"
+                           },
+                           {
+                               "nodeGuid":  "288fc487-7657-4be2-965f-99ebf2bcf35f",
+                               "nodeId":  "11",
+                               "section":  "03 | HƯỚNG VÀ KHOẢNG CÁCH"
+                           },
+                           {
+                               "nodeGuid":  "1826c4fd-ec69-4c6c-abd3-02cbe50e9e8a",
+                               "nodeId":  "108",
+                               "section":  "03 | HƯỚNG VÀ KHOẢNG CÁCH"
+                           },
+                           {
+                               "nodeGuid":  "9a3d066d-b38e-4c6c-8c18-328bc187e722",
+                               "nodeId":  "197",
+                               "section":  "03 | HƯỚNG VÀ KHOẢNG CÁCH"
+                           },
+                           {
+                               "nodeGuid":  "f1ce3dbb-52f3-44d4-a800-2f26b66724a1",
+                               "nodeId":  "90",
+                               "section":  "03 | HƯỚNG VÀ KHOẢNG CÁCH"
+                           },
+                           {
+                               "nodeGuid":  "48e9b922-d536-4f27-b16c-6708f9f7950f",
+                               "nodeId":  "72",
+                               "section":  "03 | HƯỚNG VÀ KHOẢNG CÁCH"
+                           },
+                           {
+                               "nodeGuid":  "4f973c56-fc8c-4812-a274-a0008b0fb771",
+                               "nodeId":  "35",
+                               "section":  "03 | HƯỚNG VÀ KHOẢNG CÁCH"
+                           },
+                           {
+                               "nodeGuid":  "15e7cd33-ce26-49ba-94e9-ef7c890759bd",
+                               "nodeId":  "78",
+                               "section":  "04 | CHỌN HÀNH VI"
+                           },
+                           {
+                               "nodeGuid":  "e1464591-7e1e-46c6-8760-70d3c1b3dbe8",
+                               "nodeId":  "129",
+                               "section":  "04 | CHỌN HÀNH VI"
+                           },
+                           {
+                               "nodeGuid":  "4f38bc1a-513d-45cd-a0b1-7faec9474722",
+                               "nodeId":  "148",
+                               "section":  "04 | CHỌN HÀNH VI"
+                           },
+                           {
+                               "nodeGuid":  "92f94507-05c0-4e63-85bf-107b044ced30",
+                               "nodeId":  "68",
+                               "section":  "04 | CHỌN HÀNH VI"
+                           },
+                           {
+                               "nodeGuid":  "572055e3-3a8e-4972-b506-7aac81e3c419",
+                               "nodeId":  "76",
+                               "section":  "04 | CHỌN HÀNH VI"
+                           },
+                           {
+                               "nodeGuid":  "76b492bc-2e47-4692-a9b3-c8d31ba0cb85",
+                               "nodeId":  "14",
+                               "section":  "04 | CHỌN HÀNH VI"
+                           },
+                           {
+                               "nodeGuid":  "ded1f33d-9d73-4efb-be1a-45a41d51451d",
+                               "nodeId":  "127",
+                               "section":  "05 | ĐUỔI VÀ QUAY MẶT"
+                           },
+                           {
+                               "nodeGuid":  "1373920c-0a9f-4aea-8bb0-6d6961098255",
+                               "nodeId":  "123",
+                               "section":  "05 | ĐUỔI VÀ QUAY MẶT"
+                           },
+                           {
+                               "nodeGuid":  "2aaa6ecd-3e17-4c5b-b93c-b8f75c10b665",
+                               "nodeId":  "131",
+                               "section":  "05 | ĐUỔI VÀ QUAY MẶT"
+                           },
+                           {
+                               "nodeGuid":  "e0664fa6-3a54-4c87-9f56-57b4dcb98a13",
+                               "nodeId":  "113",
+                               "section":  "05 | ĐUỔI VÀ QUAY MẶT"
+                           },
+                           {
+                               "nodeGuid":  "637ec21c-1f8e-4cbc-a89e-bce0b8aa5904",
+                               "nodeId":  "60",
+                               "section":  "05 | ĐUỔI VÀ QUAY MẶT"
+                           },
+                           {
+                               "nodeGuid":  "40340370-351f-4965-926c-bb55e6b33567",
+                               "nodeId":  "152",
+                               "section":  "05 | ĐUỔI VÀ QUAY MẶT"
+                           },
+                           {
+                               "nodeGuid":  "60b802d5-89b8-45a2-a94c-0d6038ad1f5a",
+                               "nodeId":  "116",
+                               "section":  "05 | ĐUỔI VÀ QUAY MẶT"
+                           },
+                           {
+                               "nodeGuid":  "5485a1e8-32a8-43ce-b14c-0211d8083c0f",
+                               "nodeId":  "110",
+                               "section":  "05 | ĐUỔI VÀ QUAY MẶT"
+                           },
+                           {
+                               "nodeGuid":  "c31431e7-bf6f-48a0-afad-674092d247cf",
+                               "nodeId":  "119",
+                               "section":  "05 | ĐUỔI VÀ QUAY MẶT"
+                           },
+                           {
+                               "nodeGuid":  "b8727b98-4355-4bc7-acd4-49750c0eda85",
+                               "nodeId":  "16",
+                               "section":  "06 | BẮT ĐẦU ĐÒN ĐÁNH"
+                           },
+                           {
+                               "nodeGuid":  "8e832f6c-8486-483b-8b87-9f1e5b7d7460",
+                               "nodeId":  "19",
+                               "section":  "06 | BẮT ĐẦU ĐÒN ĐÁNH"
+                           },
+                           {
+                               "nodeGuid":  "ec8e82c7-46ab-44a0-8fda-015974913fae",
+                               "nodeId":  "27",
+                               "section":  "06 | BẮT ĐẦU ĐÒN ĐÁNH"
+                           },
+                           {
+                               "nodeGuid":  "857d213c-52d8-4232-a4fe-22b420f0db3b",
+                               "nodeId":  "45",
+                               "section":  "06 | BẮT ĐẦU ĐÒN ĐÁNH"
+                           },
+                           {
+                               "nodeGuid":  "210b8a86-a78b-49c2-902c-635c1999ce1f",
+                               "nodeId":  "29",
+                               "section":  "06 | BẮT ĐẦU ĐÒN ĐÁNH"
+                           },
+                           {
+                               "nodeGuid":  "899bd51e-0536-4395-ab43-e10f469a6b4a",
+                               "nodeId":  "33",
+                               "section":  "06 | BẮT ĐẦU ĐÒN ĐÁNH"
+                           },
+                           {
+                               "nodeGuid":  "b7a5b6a7-4f10-45af-be08-0ff9d3e69d89",
+                               "nodeId":  "47",
+                               "section":  "06 | BẮT ĐẦU ĐÒN ĐÁNH"
+                           },
+                           {
+                               "nodeGuid":  "978fd28a-bfc6-4223-9c1b-0a92ae120af1",
+                               "nodeId":  "70",
+                               "section":  "06 | BẮT ĐẦU ĐÒN ĐÁNH"
+                           },
+                           {
+                               "nodeGuid":  "07334238-38cc-4c89-be63-42e34fecfb3d",
+                               "nodeId":  "37",
+                               "section":  "06 | BẮT ĐẦU ĐÒN ĐÁNH"
+                           },
+                           {
+                               "nodeGuid":  "3db10a79-ad12-4d88-bb27-6914410de919",
+                               "nodeId":  "39",
+                               "section":  "07 | GÂY SÁT THƯƠNG VÀ NGHỈ"
+                           },
+                           {
+                               "nodeGuid":  "4113984d-a6f6-447d-ac7b-2e3927a7236d",
+                               "nodeId":  "43",
+                               "section":  "07 | GÂY SÁT THƯƠNG VÀ NGHỈ"
+                           },
+                           {
+                               "nodeGuid":  "c8a2e303-17cb-4e1c-8689-ea26ea1eb232",
+                               "nodeId":  "41",
+                               "section":  "07 | GÂY SÁT THƯƠNG VÀ NGHỈ"
+                           },
+                           {
+                               "nodeGuid":  "1eb280d4-d7c9-4f0c-bf3d-47e58c975f37",
+                               "nodeId":  "74",
+                               "section":  "07 | GÂY SÁT THƯƠNG VÀ NGHỈ"
+                           },
+                           {
+                               "nodeGuid":  "4aef1771-b77c-443a-8439-7a88a81b7d5a",
+                               "nodeId":  "31",
+                               "section":  "07 | GÂY SÁT THƯƠNG VÀ NGHỈ"
+                           },
+                           {
+                               "nodeGuid":  "e4dcc237-2009-4211-844e-187047c48bd1",
+                               "nodeId":  "100",
+                               "section":  "07 | GÂY SÁT THƯƠNG VÀ NGHỈ"
+                           },
+                           {
+                               "nodeGuid":  "ce98e8f0-d7d7-4630-bf73-5f295d78b57f",
+                               "nodeId":  "51",
+                               "section":  "07 | GÂY SÁT THƯƠNG VÀ NGHỈ"
+                           },
+                           {
+                               "nodeGuid":  "32cf3c40-0a87-43b2-8a37-0f3578214823",
+                               "nodeId":  "134",
+                               "section":  "08 | DỪNG TRONG LÚC HURT"
+                           },
+                           {
+                               "nodeGuid":  "f2408cf1-8543-43d9-9188-bbbe5b786c76",
+                               "nodeId":  "137",
+                               "section":  "08 | DỪNG TRONG LÚC HURT"
+                           },
+                           {
+                               "nodeGuid":  "6991fff9-2006-4c7c-8f55-b03541ba5c75",
+                               "nodeId":  "141",
+                               "section":  "09 | NHẬN ARROW VÀ LỌC TAG"
+                           },
+                           {
+                               "nodeGuid":  "77313d5d-bae5-4079-9b26-d76fb05767b5",
+                               "nodeId":  "143",
+                               "section":  "09 | NHẬN ARROW VÀ LỌC TAG"
+                           },
+                           {
+                               "nodeGuid":  "1cda2597-c930-4ee8-9730-fa22aea4b895",
+                               "nodeId":  "104",
+                               "section":  "09 | NHẬN ARROW VÀ LỌC TAG"
+                           },
+                           {
+                               "nodeGuid":  "5c1f7728-fa8d-4f00-a73e-dc23aa955143",
+                               "nodeId":  "125",
+                               "section":  "09 | NHẬN ARROW VÀ LỌC TAG"
+                           },
+                           {
+                               "nodeGuid":  "0ff03200-38c9-4af9-bba7-055fc7a66bdf",
+                               "nodeId":  "146",
+                               "section":  "09 | NHẬN ARROW VÀ LỌC TAG"
+                           },
+                           {
+                               "nodeGuid":  "b358ad93-e9a4-4780-9818-1cbef1836bcf",
+                               "nodeId":  "150",
+                               "section":  "09 | NHẬN ARROW VÀ LỌC TAG"
+                           },
+                           {
+                               "nodeGuid":  "a1b69cd0-6486-4521-a8ee-47ca45320a3d",
+                               "nodeId":  "160",
+                               "section":  "09 | NHẬN ARROW VÀ LỌC TAG"
+                           },
+                           {
+                               "nodeGuid":  "f09d34e7-8639-4d75-9d9e-2d1eda34b1d2",
+                               "nodeId":  "154",
+                               "section":  "10 | TRỪ MÁU VÀ RẼ NHÁNH"
+                           },
+                           {
+                               "nodeGuid":  "6eb30105-ecfb-4695-918a-318bdf8ee75f",
+                               "nodeId":  "164",
+                               "section":  "10 | TRỪ MÁU VÀ RẼ NHÁNH"
+                           },
+                           {
+                               "nodeGuid":  "921ac8d0-be59-4034-b21b-098821f9c89b",
+                               "nodeId":  "162",
+                               "section":  "10 | TRỪ MÁU VÀ RẼ NHÁNH"
+                           },
+                           {
+                               "nodeGuid":  "cf34c586-5d81-4b3f-bff0-78e1246484d9",
+                               "nodeId":  "166",
+                               "section":  "10 | TRỪ MÁU VÀ RẼ NHÁNH"
+                           },
+                           {
+                               "nodeGuid":  "eeedc701-1c61-4e94-ab3e-fc54a8bf5616",
+                               "nodeId":  "168",
+                               "section":  "10 | TRỪ MÁU VÀ RẼ NHÁNH"
+                           },
+                           {
+                               "nodeGuid":  "0674d659-09c9-432b-9ca2-ca1b90942bb4",
+                               "nodeId":  "176",
+                               "section":  "10 | TRỪ MÁU VÀ RẼ NHÁNH"
+                           },
+                           {
+                               "nodeGuid":  "ac62f2b4-200b-4bc9-b914-7abf045ec250",
+                               "nodeId":  "170",
+                               "section":  "11 | HURT VÀ HỒI PHỤC"
+                           },
+                           {
+                               "nodeGuid":  "1f5f8ce3-8bd4-4df1-aaf0-bbe19aba0cfb",
+                               "nodeId":  "158",
+                               "section":  "11 | HURT VÀ HỒI PHỤC"
+                           },
+                           {
+                               "nodeGuid":  "dc73c1f9-ef77-47e3-b99d-977cac588063",
+                               "nodeId":  "172",
+                               "section":  "11 | HURT VÀ HỒI PHỤC"
+                           },
+                           {
+                               "nodeGuid":  "49575c7f-1797-425c-b4d0-f8b19b8a8722",
+                               "nodeId":  "178",
+                               "section":  "11 | HURT VÀ HỒI PHỤC"
+                           },
+                           {
+                               "nodeGuid":  "c702d582-d941-49d2-968a-c327a367cc9c",
+                               "nodeId":  "180",
+                               "section":  "11 | HURT VÀ HỒI PHỤC"
+                           },
+                           {
+                               "nodeGuid":  "6a0fbc5a-351e-45de-884a-b180127cc6ab",
+                               "nodeId":  "182",
+                               "section":  "11 | HURT VÀ HỒI PHỤC"
+                           },
+                           {
+                               "nodeGuid":  "47d7cbea-0697-46f0-bc60-1f2ff6c29115",
+                               "nodeId":  "184",
+                               "section":  "12 | CHẾT VÀ HỦY GOLEM"
+                           },
+                           {
+                               "nodeGuid":  "d86d0e23-dccd-47e1-9317-1c8e056702f5",
+                               "nodeId":  "188",
+                               "section":  "12 | CHẾT VÀ HỦY GOLEM"
+                           },
+                           {
+                               "nodeGuid":  "d998ab36-b00d-41ca-b56f-4591fabec08d",
+                               "nodeId":  "191",
+                               "section":  "12 | CHẾT VÀ HỦY GOLEM"
+                           },
+                           {
+                               "nodeGuid":  "a987c1bd-ee78-47bc-b9b8-eb9f3d584247",
+                               "nodeId":  "194",
+                               "section":  "12 | CHẾT VÀ HỦY GOLEM"
+                           },
+                           {
+                               "nodeGuid":  "32b97619-a591-4272-a324-3e943e353898",
+                               "nodeId":  "56",
+                               "section":  "12 | CHẾT VÀ HỦY GOLEM"
+                           },
+                           {
+                               "nodeGuid":  "6667461c-6c51-4e2c-9fa5-10b920fc5e9f",
+                               "nodeId":  "199",
+                               "section":  "12 | CHẾT VÀ HỦY GOLEM"
+                           },
+                           {
+                               "nodeGuid":  "f768c63b-18a2-4423-8eb6-fce9b32c90bb",
+                               "nodeId":  "201",
+                               "section":  "12 | CHẾT VÀ HỦY GOLEM"
+                           }
+                       ]
+}

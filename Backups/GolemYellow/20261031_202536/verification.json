@@ -1,0 +1,20 @@
+{
+  "blueHP": 9,
+  "yellowHP": 3,
+  "damagePerHit": 1,
+  "yellowGraphNodes": 79,
+  "yellowGraphConnections": 83,
+  "yellowGroups": 12,
+  "yellowGraphGUID": "c6e0f0777431462f8c651f1ffa1b5a82",
+  "yellowComponents": {
+    "rigidbody": "3541721619531795679",
+    "collider": "405937289625734577",
+    "variables": "3171497350686431758",
+    "machine": "1192597615846705726"
+  },
+  "originalScenePositionsPreserved": true,
+  "blueOnlyHealthChanged": true,
+  "graphReferenceOrderValidated": true,
+  "controllerReferencesValidated": true,
+  "files": 7
+}
