@@ -1,0 +1,8 @@
+{
+  "triggerReachedVictory": true,
+  "nextButtonLoadedLevel2": true,
+  "restartButtonReloadedLevel2": true,
+  "sceneParseIssueFixed": true,
+  "fullMapTraversalTested": false,
+  "temporarySceneArchived": true
+}

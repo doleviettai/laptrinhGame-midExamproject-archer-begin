@@ -1,0 +1,19 @@
+{
+  "backup": "D:\\GamePrograms\\MidTestExam\\Backups\\LevelVictory\\20261101_141031",
+  "finishPoint": 590000000000000048,
+  "finishTransform": 590000000000000043,
+  "finishCollider": 590000000000000044,
+  "finishGraphGuid": "bf2e155f402e488daf14c24f8eda45c1",
+  "victoryCanvas": 590000000000000001,
+  "victoryTransform": 590000000000000002,
+  "nextButton": 590000000000000030,
+  "level2Guid": "60d0d6ed42f74568a652fb27e9e080f8",
+  "flagGuid": "51782f56b71a441bb10ace1697ef9799",
+  "finishPosition": [
+    108.5,
+    -6.24,
+    0
+  ],
+  "nextSceneLevel1": "Level2",
+  "nextSceneLevel2": "SampleScene"
+}
